@@ -9,7 +9,12 @@ image_analysis:
   edge_density_threshold: 0.08
   
   # Entropy threshold for complexity detection
-  entropy_threshold: 5.0
+  entropy_threshold: 7.0
+
+miner_info:
+  name: "vhmZbEWav"
+  kind: "LiDCoVoBbhnm"
+  process_type: "WoiMpEpaklvNH"
 
 # =============================================================================
 # SAMPLING PARAMETERS - COMPLEX IMAGES
