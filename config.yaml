@@ -1,0 +1,128 @@
+# TRELLIS 3D Generation Configuration
+# This file controls all tunable parameters for 3D generation quality
+
+# =============================================================================
+# IMAGE ANALYSIS THRESHOLDS
+# =============================================================================
+image_analysis:
+  # Edge density threshold for complexity detection
+  edge_density_threshold: 0.08
+  
+  # Entropy threshold for complexity detection
+  entropy_threshold: 5.0
+
+# =============================================================================
+# SAMPLING PARAMETERS - COMPLEX IMAGES
+# =============================================================================
+complex_image:
+  # Sparse Structure Generation (Coarse Geometry)
+  sparse_structure:
+    steps: 18              # Number of sampling steps (1-100)
+    cfg_strength: 7.5      # Classifier-Free Guidance strength (0-10)
+    
+  # Structured Latent Generation (Detail Refinement)
+  slat:
+    steps: 22              # Number of sampling steps (1-50)
+    cfg_strength: 3.0      # Classifier-Free Guidance strength (0-10)
+
+# =============================================================================
+# SAMPLING PARAMETERS - SIMPLE OBJECTS
+# =============================================================================
+simple_object:
+  # Sparse Structure Generation (Coarse Geometry)
+  sparse_structure:
+    steps: 15              # Number of sampling steps (1-100)
+    cfg_strength: 6.0      # Classifier-Free Guidance strength (0-10)
+    
+  # Structured Latent Generation (Detail Refinement)
+  slat:
+    steps: 17              # Number of sampling steps (1-50)
+    cfg_strength: 2.0      # Classifier-Free Guidance strength (0-10)
+
+# =============================================================================
+# IMAGE PREPROCESSING PARAMETERS
+# =============================================================================
+preprocessing:
+  crop_padding: 1.2        # Padding around object (1.0-1.5)
+  blur_radius: 0.5         # Gaussian blur radius (0-2.0)
+  output_resolution: 518   # Preprocessed image size (256-1024)
+  alpha_threshold: 0.8     # Background removal threshold (0-1)
+  
+# =============================================================================
+# IMAGE ENHANCEMENT PARAMETERS
+# =============================================================================
+enhancement:
+  enabled: false            # Enable/disable image enhancement
+  contrast: 1.0            # Contrast multiplier (0.5-2.0, 1.0=no change)
+  brightness: 1.0          # Brightness multiplier (0.5-2.0, 1.0=no change)
+  color: 1.0               # Color saturation multiplier (0.0-2.0, 1.0=no change)
+  sharpness: 1.0           # Sharpness multiplier (0.0-2.0, 1.0=no change)
+
+# =============================================================================
+# GAUSSIAN REPRESENTATION PARAMETERS
+# =============================================================================
+gaussian:
+  sh_degree: 0             # Spherical harmonics degree (0-3)
+  minimum_kernel_size: 0.0 # Minimum Gaussian size (0-0.01)
+  scaling_bias: 0.01       # Initial Gaussian scale (0.001-0.1)
+  opacity_bias: 0.1        # Initial Gaussian opacity (0-1)
+  scaling_activation: 'exp' # 'exp' or 'softplus'
+  
+# =============================================================================
+# POINT CLOUD REFINEMENT PARAMETERS
+# =============================================================================
+refinement:
+  enabled: true           # Enable/disable statistical outlier removal (DISABLED for stability)
+  min_points: 100          # Minimum points required for refinement
+  max_points: 30000        # Maximum points to process (skip if more to avoid timeout)
+  nb_neighbors: 20         # Number of neighbors to consider (lower = faster)
+  std_ratio: 2.0           # Standard deviation ratio threshold
+  timeout_seconds: 5       # Maximum time for refinement (0 = no limit)
+
+# =============================================================================
+# GENERATION SETTINGS
+# =============================================================================
+generation:
+  seed: 123         #12313       42         # Random seed for reproducibility (-1 = random)
+  timeout_seconds: 35      # Maximum generation time in seconds
+  formats: ['gaussian']    # Output formats: 'gaussian', 'mesh', 'radiance_field'
+  
+# =============================================================================
+# MEMORY & PERFORMANCE
+# =============================================================================
+performance:
+  max_concurrent: 2        # Maximum concurrent generations
+  cleanup_threshold_gb: 0.1 # Minimum memory to cleanup (GB)
+  force_deterministic: false # Force deterministic algorithms (slower)
+
+# =============================================================================
+# PRESETS - Quick configuration profiles
+# =============================================================================
+# Uncomment one preset to override settings above
+# presets:
+#   # High Quality (Slower)
+#   high_quality:
+#     complex_image:
+#       sparse_structure: {steps: 50, cfg_strength: 8.0}
+#       slat: {steps: 30, cfg_strength: 4.0}
+#     simple_object:
+#       sparse_structure: {steps: 30, cfg_strength: 7.0}
+#       slat: {steps: 20, cfg_strength: 3.0}
+#   
+#   # Fast (Lower Quality)
+#   fast:
+#     complex_image:
+#       sparse_structure: {steps: 12, cfg_strength: 6.0}
+#       slat: {steps: 12, cfg_strength: 2.5}
+#     simple_object:
+#       sparse_structure: {steps: 8, cfg_strength: 5.0}
+#       slat: {steps: 8, cfg_strength: 2.0}
+#   
+#   # Balanced (Default)
+#   balanced:
+#     complex_image:
+#       sparse_structure: {steps: 18, cfg_strength: 7.5}
+#       slat: {steps: 22, cfg_strength: 3.0}
+#     simple_object:
+#       sparse_structure: {steps: 12, cfg_strength: 6.0}
+#       slat: {steps: 14, cfg_strength: 2.0}
