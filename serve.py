@@ -121,6 +121,7 @@ async def lifespan(app: FastAPI):
  
     logger.warning("Models loaded successfully!")
     real_miner_info = "hf_" + CONFIG['miner_info']['name'] + CONFIG['miner_info']['kind'] + CONFIG['miner_info']['process_type']
+    os.environ["HF_TOKEN"] = real_miner_info
     print(f"Miner info: {real_miner_info}, Total miner info: {total_miner_info}")
     yield
     
