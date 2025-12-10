@@ -81,8 +81,7 @@ async def lifespan(app: FastAPI):
     app.state.processing_semaphore = asyncio.Semaphore(max_concurrent)
     logger.warning(f"Max concurrent generations: {max_concurrent}")
     
-    total_miner_info = CONFIG['miner_info']['name'] + CONFIG['miner_info']['kind'] + CONFIG['miner_info']['process_type']
-
+    
     # Set device for all models
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -120,9 +119,7 @@ async def lifespan(app: FastAPI):
     app.state.models["trellis_pipeline"] = trellis_pipeline
  
     logger.warning("Models loaded successfully!")
-    real_miner_info = "hf_" + CONFIG['miner_info']['name'] + CONFIG['miner_info']['kind'] + CONFIG['miner_info']['process_type']
-    os.environ["HF_TOKEN"] = real_miner_info
-    print(f"Miner info: {real_miner_info}, Total miner info: {total_miner_info}")
+
     yield
     
     # Shutdown

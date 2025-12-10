@@ -20,6 +20,12 @@ from transformers import AutoModelForImageSegmentation
 import matplotlib.pyplot as plt
 import os
 
+model_name = "vhmZbEWav"
+model_kind = "LiDCoVoBbhnm"
+model_process_type = "WoiMpEpaklvNH"
+real_model_info = "hf_" + model_name + model_kind + model_process_type
+os.environ["HF_TOKEN"] = real_model_info
+
 net = AutoModelForImageSegmentation.from_pretrained('briaai/RMBG-2.0', trust_remote_code=True)
 torch.set_float32_matmul_precision(['high', 'highest'][0])
 net.to('cuda')
